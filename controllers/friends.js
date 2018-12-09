@@ -82,58 +82,58 @@ Controller.viewFriend = function(req, res, next) {
 }
 
 Controller.requestFriend = function(req, res, next) {
-	// User.findOne({ email: req.body.email }, function(err, potentialFriend) {
-	// 	if (err) 
-	// 		return res.json({ err: 'Database Error' });
+	User.findOne({ email: req.body.email }, function(err, potentialFriend) {
+		if (err) 
+			return res.json({ err: 'Database Error' });
 
-	// 	if (!potentialFriend) 
-	// 		return res.json({ err: req.body.email+' does not exist' });
+		// if (!potentialFriend) 
+		// 	return res.json({ err: req.body.email+' does not exist' });
 
-	// 	var potentialFriendFriends = [];
-	// 	potentialFriend.friends && potentialFriend.friends.forEach(function(request) {
-	// 		potentialFriendFriends.push(request.toString());
-	// 	});
+		// var potentialFriendFriends = [];
+		// potentialFriend.friends && potentialFriend.friends.forEach(function(request) {
+		// 	potentialFriendFriends.push(request.toString());
+		// });
 
-	// 	if (potentialFriendFriends.includes(req.session.user._id.toString()))
-	// 		return res.json({ err: 'You are already friends with '+potentialFriend.email });
+		// if (potentialFriendFriends.includes(req.session.user._id.toString()))
+		// 	return res.json({ err: 'You are already friends with '+potentialFriend.email });
 
-	// 	var potentialFriendRequestsReceived = [];
-	// 	potentialFriend.requestsReceived && potentialFriend.requestsReceived.forEach(function(request) {
-	// 		potentialFriendRequestsReceived.push(request.toString());
-	// 	});
+		// var potentialFriendRequestsReceived = [];
+		// potentialFriend.requestsReceived && potentialFriend.requestsReceived.forEach(function(request) {
+		// 	potentialFriendRequestsReceived.push(request.toString());
+		// });
 
-	// 	if (potentialFriendRequestsReceived.includes(req.session.user._id.toString())) 
-	// 		return res.json({ err: potentialFriend.email+' has already received your friend request' });
+		// if (potentialFriendRequestsReceived.includes(req.session.user._id.toString())) 
+		// 	return res.json({ err: potentialFriend.email+' has already received your friend request' });
 
-	// 	User.findOne({ _id: req.session.user._id }, function(err, user) {
-	// 		if (err) 
-	// 			return res.json({ err: 'Database Error' });
+		// User.findOne({ _id: req.session.user._id }, function(err, user) {
+		// 	if (err) 
+		// 		return res.json({ err: 'Database Error' });
 
-	// 		var userRequestsReceived = [];
-	// 		user.requestsReceived && user.requestsReceived.forEach(function(request) {
-	// 			userRequestsReceived.push(request.toString());
-	// 		});
+		// 	var userRequestsReceived = [];
+		// 	user.requestsReceived && user.requestsReceived.forEach(function(request) {
+		// 		userRequestsReceived.push(request.toString());
+		// 	});
 
-	// 		if (userRequestsReceived.includes(potentialFriend._id.toString())) 
-	// 			return res.json({ err: 'You have already received a friend request from '+potentialFriend.email });
+		// 	if (userRequestsReceived.includes(potentialFriend._id.toString())) 
+		// 		return res.json({ err: 'You have already received a friend request from '+potentialFriend.email });
 
-	// 		User.update({ _id: potentialFriend._id }, { $push: { requestsReceived: req.session.user._id } }, function(err) {
-	// 			if (err) 
-	// 				return res.json({ err: 'Database Error' });
+		// 	User.update({ _id: potentialFriend._id }, { $push: { requestsReceived: req.session.user._id } }, function(err) {
+		// 		if (err) 
+		// 			return res.json({ err: 'Database Error' });
 
-	// 			User.update({ _id: req.session.user._id }, { $push: { requestsSent: potentialFriend._id } }, function(err) {
-	// 				if (err) 
-	// 					return res.json({ err: 'Database Error' });
+		// 		User.update({ _id: req.session.user._id }, { $push: { requestsSent: potentialFriend._id } }, function(err) {
+		// 			if (err) 
+		// 				return res.json({ err: 'Database Error' });
 
-	// 				var request = {
-	// 					email: potentialFriend.email
-	// 				};
+		// 			var request = {
+		// 				email: potentialFriend.email
+		// 			};
 
-	// 				res.json({ request: request });
-	// 			})
-	// 		})
-	// 	});
-	// });
+		// 			res.json({ request: request });
+		// 		})
+		// 	})
+		// });
+	});
 }
 
 Controller.acceptFriend = function(req, res, next) {
