@@ -94,47 +94,45 @@ Controller.requestFriend = function(req, res, next) {
 			potentialFriendFriends.push(request+'');
 		});
 
-		return res.json({ err: (([]).includes)+'' });
-
-		if ((potentialFriendFriends || []).includes(req.session.user._id+''))
+		if (Services.includes(potentialFriendFriends, req.session.user._id+''))
 			return res.json({ err: 'You are already friends with '+potentialFriend.email });
 
-		// var potentialFriendRequestsReceived = [];
-		// potentialFriend.requestsReceived && potentialFriend.requestsReceived.forEach(function(request) {
-		// 	potentialFriendRequestsReceived.push(request.toString());
-		// });
+		var potentialFriendRequestsReceived = [];
+		potentialFriend.requestsReceived && potentialFriend.requestsReceived.forEach(function(request) {
+			potentialFriendRequestsReceived.push(request+'');
+		});
 
-		// if (potentialFriendRequestsReceived.includes(req.session.user._id.toString())) 
-		// 	return res.json({ err: potentialFriend.email+' has already received your friend request' });
+		if (Services.includes(potentialFriendRequestsReceived, req.session.user._id+'')) 
+			return res.json({ err: potentialFriend.email+' has already received your friend request' });
 
-		// User.findOne({ _id: req.session.user._id }, function(err, user) {
-		// 	if (err) 
-		// 		return res.json({ err: 'Database Error' });
+		User.findOne({ _id: req.session.user._id }, function(err, user) {
+			if (err) 
+				return res.json({ err: 'Database Error' });
 
-		// 	var userRequestsReceived = [];
-		// 	user.requestsReceived && user.requestsReceived.forEach(function(request) {
-		// 		userRequestsReceived.push(request.toString());
-		// 	});
+			var userRequestsReceived = [];
+			user.requestsReceived && user.requestsReceived.forEach(function(request) {
+				userRequestsReceived.push(request+'');
+			});
 
-		// 	if (userRequestsReceived.includes(potentialFriend._id.toString())) 
-		// 		return res.json({ err: 'You have already received a friend request from '+potentialFriend.email });
+			if (Services.includes(userRequestsReceived, potentialFriend._id+'')) 
+				return res.json({ err: 'You have already received a friend request from '+potentialFriend.email });
 
-		// 	User.update({ _id: potentialFriend._id }, { $push: { requestsReceived: req.session.user._id } }, function(err) {
-		// 		if (err) 
-		// 			return res.json({ err: 'Database Error' });
+			User.update({ _id: potentialFriend._id }, { $push: { requestsReceived: req.session.user._id } }, function(err) {
+				if (err) 
+					return res.json({ err: 'Database Error' });
 
-		// 		User.update({ _id: req.session.user._id }, { $push: { requestsSent: potentialFriend._id } }, function(err) {
-		// 			if (err) 
-		// 				return res.json({ err: 'Database Error' });
+				User.update({ _id: req.session.user._id }, { $push: { requestsSent: potentialFriend._id } }, function(err) {
+					if (err) 
+						return res.json({ err: 'Database Error' });
 
-		// 			var request = {
-		// 				email: potentialFriend.email
-		// 			};
+					var request = {
+						email: potentialFriend.email
+					};
 
-		// 			res.json({ request: request });
-		// 		})
-		// 	})
-		// });
+					res.json({ request: request });
+				})
+			})
+		});
 	});
 }
 
@@ -148,7 +146,7 @@ Controller.acceptFriend = function(req, res, next) {
 			requestsReceived.push(request.toString());
 		});
 
-		if (!requestsReceived.includes(req.body.potentialFriend))
+		if (!Services.includes(requestsReceived, req.body.potentialFriend))
 			return res.json({ err: 'That User did not send a request' })
 
 		User.update({ _id: req.body.potentialFriend }, { $pull: { requestsSent: user._id }, $push: { friends: user._id } }, function(err) {

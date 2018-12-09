@@ -34,6 +34,15 @@ Services.formatTime = function(seconds) {
 	return display;
 };
 
+Services.includes = function(arr, matchVal) {
+	var match = arr.some(function(val) {
+		if (val == matchVal)
+			return true;
+	});
+
+	return match;
+}
+
 Services.formatHTMLDate = function(date) {
 	var m = date.getUTCMonth()+1;
 	if ((date.getUTCMonth()+1) < 10)
