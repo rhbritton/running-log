@@ -91,11 +91,13 @@ Controller.requestFriend = function(req, res, next) {
 
 		var potentialFriendFriends = [];
 		potentialFriend.friends && potentialFriend.friends.forEach(function(request) {
-			potentialFriendFriends.push(request.toString());
+			potentialFriendFriends.push(request+'');
 		});
 
-		// if (potentialFriendFriends.includes(req.session.user._id+''))
-		// 	return res.json({ err: 'You are already friends with '+potentialFriend.email });
+		return res.json({ err: req.session.user._id });
+
+		if (potentialFriendFriends.includes(req.session.user._id+''))
+			return res.json({ err: 'You are already friends with '+potentialFriend.email });
 
 		// var potentialFriendRequestsReceived = [];
 		// potentialFriend.requestsReceived && potentialFriend.requestsReceived.forEach(function(request) {
