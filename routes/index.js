@@ -198,7 +198,10 @@ router.get('/run/add', auth, function(req, res, next) {
 		hoursDropdown.push({ display: i+'h', value: i });
 	}
 
-	res.render('run', { user: req.session.user, today: formatHTMLDate(new Date()), redirect_url: encodeURI(req.header('Referer') || '/'), secondsDropdown: secondsDropdown, minutesDropdown: minutesDropdown, hoursDropdown: hoursDropdown });
+	var today = new Date();
+	today.setHours(0, 0, 0, 0);
+
+	res.render('run', { user: req.session.user, today: formatHTMLDate(today), redirect_url: encodeURI(req.header('Referer') || '/'), secondsDropdown: secondsDropdown, minutesDropdown: minutesDropdown, hoursDropdown: hoursDropdown });
 });
 
 router.post('/run/add', auth, function(req, res, next) {

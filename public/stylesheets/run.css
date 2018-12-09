@@ -14,6 +14,11 @@ button[type="submit"]:hover {
 	background-color: #7390D9;
 }
 
+.required {
+	text-decoration: none;
+	color: red;
+}
+
 .rpe_link {
 	color: #00B7FF;
 	cursor: pointer;
