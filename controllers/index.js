@@ -34,7 +34,7 @@ Controller.home = function(req, res, next) {
 					srpe: 0
 				}
 
-				runs.forEach(function(run, i) {
+				runs && runs.forEach(function(run, i) {
 					runs[i].dateFormat = Services.formatDisplayDate(run.date);
 					runs[i].time = Services.formatTime(run.seconds);
 					runs[i].minPerMile = Services.calcMinsPerMile(run.miles, run.seconds);

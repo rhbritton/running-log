@@ -41,7 +41,7 @@ Controller.viewFriend = function(req, res, next) {
 					srpe: 0
 				}
 
-				runs.forEach(function(run, i) {
+				runs && runs.forEach(function(run, i) {
 					runs[i].dateFormat = Services.formatDisplayDate(run.date);
 					runs[i].time = Services.formatTime(run.seconds);
 					runs[i].minPerMile = Services.calcMinsPerMile(run.miles, run.seconds);
@@ -90,7 +90,7 @@ Controller.requestFriend = function(req, res, next) {
 			return res.json({ err: req.body.email+' does not exist' });
 
 		var potentialFriendFriends = [];
-		potentialFriend.friends.forEach(function(request) {
+		potentialFriend.friends && potentialFriend.friends.forEach(function(request) {
 			potentialFriendFriends.push(request.toString());
 		});
 
@@ -98,7 +98,7 @@ Controller.requestFriend = function(req, res, next) {
 			return res.json({ err: 'You are already friends with '+potentialFriend.email });
 
 		var potentialFriendRequestsReceived = [];
-		potentialFriend.requestsReceived.forEach(function(request) {
+		potentialFriend.requestsReceived && potentialFriend.requestsReceived.forEach(function(request) {
 			potentialFriendRequestsReceived.push(request.toString());
 		});
 
@@ -110,7 +110,7 @@ Controller.requestFriend = function(req, res, next) {
 				return res.json({ err: 'Database Error' });
 
 			var userRequestsReceived = [];
-			user.requestsReceived.forEach(function(request) {
+			user.requestsReceived && user.requestsReceived.forEach(function(request) {
 				userRequestsReceived.push(request.toString());
 			});
 
@@ -142,7 +142,7 @@ Controller.acceptFriend = function(req, res, next) {
 			return res.json({ err: 'Database Error' });
 
 		var requestsReceived = [];
-		user.requestsReceived.forEach(function(request) {
+		user.requestsReceived && user.requestsReceived.forEach(function(request) {
 			requestsReceived.push(request.toString());
 		});
 
