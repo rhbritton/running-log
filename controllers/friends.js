@@ -94,9 +94,9 @@ Controller.requestFriend = function(req, res, next) {
 			potentialFriendFriends.push(request+'');
 		});
 
-		return res.json({ err: (typeof potentialFriendFriends) });
+		return res.json({ err: potentialFriendFriends.includes });
 
-		if (potentialFriendFriends.includes(req.session.user._id+''))
+		if ((potentialFriendFriends).includes(req.session.user._id+''))
 			return res.json({ err: 'You are already friends with '+potentialFriend.email });
 
 		// var potentialFriendRequestsReceived = [];
