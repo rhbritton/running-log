@@ -94,16 +94,16 @@ Controller.requestFriend = function(req, res, next) {
 			potentialFriendFriends.push(request.toString());
 		});
 
-		if (potentialFriendFriends.includes(req.session.user._id.toString()))
-			return res.json({ err: 'You are already friends with '+potentialFriend.email });
+		// if (potentialFriendFriends.includes(req.session.user._id.toString()))
+		// 	return res.json({ err: 'You are already friends with '+potentialFriend.email });
 
-		var potentialFriendRequestsReceived = [];
-		potentialFriend.requestsReceived && potentialFriend.requestsReceived.forEach(function(request) {
-			potentialFriendRequestsReceived.push(request.toString());
-		});
+		// var potentialFriendRequestsReceived = [];
+		// potentialFriend.requestsReceived && potentialFriend.requestsReceived.forEach(function(request) {
+		// 	potentialFriendRequestsReceived.push(request.toString());
+		// });
 
-		if (potentialFriendRequestsReceived.includes(req.session.user._id.toString())) 
-			return res.json({ err: potentialFriend.email+' has already received your friend request' });
+		// if (potentialFriendRequestsReceived.includes(req.session.user._id.toString())) 
+		// 	return res.json({ err: potentialFriend.email+' has already received your friend request' });
 
 		// User.findOne({ _id: req.session.user._id }, function(err, user) {
 		// 	if (err) 
