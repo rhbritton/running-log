@@ -1,11 +1,17 @@
 var Services = {};
 
 Services.auth = function(req, res, next) {
-    if (!req.session.user || !req.session.user._id) {
+    if (!req.session.user || !req.session.user._id)
         res.redirect('/login');
-    } else {
+    else
         next();
-    }
+};
+
+Services.authJSON = function(req, res, next) {
+    if (!req.session.user || !req.session.user._id)
+        res.json({ err: 'Not Logged In' });
+   	else
+        next();
 };
 
 Services.formatTime = function(seconds) {

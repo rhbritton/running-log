@@ -9,8 +9,8 @@ router.get('/', Services.auth, Controller.friendsList);
 
 router.get('/view/:id', Services.auth, Controller.viewFriend);
 
-router.post('/request-friend', Services.auth, Controller.requestFriend);
+router.post('/request-friend', Services.authJSON, Controller.requestFriend);
 
-router.post('/accept-friend-request', Services.auth, Controller.acceptFriend);
+router.post('/accept-friend-request', Services.authJSON, Controller.acceptFriend);
 
 module.exports = router;
