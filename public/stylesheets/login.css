@@ -41,24 +41,6 @@ button[type="submit"] {
 	background-color: #FFB67B;
 }
 
-.err {
-	display: block;
-	height: 1.5em;
-	width: 100%;
-	margin-top: -0.5em;
-	margin-bottom: 0.5em;
-}
-
-.err span {
-	display: block;
-	background-color: #FF5656;
-	padding: 0.25em;
-	padding-left: 0;
-	padding-right: 0;
-	color: white;
-	width: 100%;
-}
-
 
 
 .switch {

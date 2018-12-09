@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Running Log - Friends</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/friends.css' />
+
+    <meta content='width=device-width, initial-scale=1' name='viewport'/>
+  </head>
+
+  <body>
+    <a href="/">Back</a>
+    <h1>Friends List</h1>
+
+    <input id="email" type="text" />
+    <button class="request_friend">Request Friend</button>
+    <div class="err"></div>
+
+    <h2>Requests</h2>
+    <table class="request_list">
+        <tr>
+            <th>Email</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+        {#requestsReceived}
+            <tr>
+                <td>{email}</td>
+                <td>Received</td>
+                <td><a class="accept_friend" data-potentialFriend="{_id}" data-email="{email}">Accept</a></td>
+            </tr>
+        {/requestsReceived}
+        {#requestsSent}
+            <tr>
+                <td>{email}</td>
+                <td>Sent</td>
+                <td></td>
+            </tr>
+        {/requestsSent}
+    </table>
+
+    <h2>Friends</h2>
+    <table class="friends_list">
+        <tr>
+            <th>Email</th>
+            <th></th>
+        </tr>
+        {#friends}
+            <tr>
+                <td>{email}</td>
+                <td><a href="/friends/view/{_id}">View Progress</a></td>
+            </tr>
+        {/friends}
+    </table>
+
+    <script src="/javascripts/plugins/jquery.min.js"></script>
+    <script src="/javascripts/friends.js"></script>
+  </body>
+</html>

@@ -3,9 +3,9 @@ $(function() {
 		var d = $(this).val()
 		if (d) {
 			d = new Date(d);
-			window.location.href = window.location.protocol + "//" + window.location.host + "/" + window.location.pathname.split('/')[1] + '?today=' + (d.getUTCMonth()+1) + '/' + d.getUTCDate() + '/' + d.getUTCFullYear();
+			window.location.href = window.location.protocol + "//" + window.location.host + window.location.pathname + '?today=' + (d.getUTCMonth()+1) + '/' + d.getUTCDate() + '/' + d.getUTCFullYear();
 		} else {
-			window.location.href = window.location.protocol + "//" + window.location.host + "/" + window.location.pathname.split('/')[1];
+			window.location.href = window.location.protocol + "//" + window.location.host + window.location.pathname;
 		}
 	})
 
@@ -21,11 +21,10 @@ $(function() {
 		});
 	})
 
-	$('.settings').click(function(e) {
+	$('.settings, .settings_notifications').click(function(e) {
 		e.stopPropagation();
 
 		let settings_dropdown = $('.settings_dropdown');
-
 		var isActive = settings_dropdown.attr('data-active');
 
 		if (isActive)

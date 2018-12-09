@@ -12,6 +12,7 @@ const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/runninglog', { useMongoClient: true }, function(err, db) {});
 
 var indexRouter = require('./routes/index');
+var friendsRouter = require('./routes/friends');
 var usersRouter = require('./routes/users');
 
 // view engine setup
@@ -36,6 +37,7 @@ app.use(session({
 }));
 
 app.use('/', indexRouter);
+app.use('/friends', friendsRouter);
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
