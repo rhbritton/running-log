@@ -42,7 +42,7 @@
 		</div>
 
 		<div class="container">
-			<label>Goal Miles</label>
+			<label>Weekly Goal Miles</label>
 			<input{^friend} data-startDate="{startDateHTML}" name="goal"{:else} disabled="true" style="background-color: white;"{/friend} type="number" value="{goal}" />
 		</div>
 	</div>
