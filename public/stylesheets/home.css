@@ -1,0 +1,85 @@
+table {
+	margin: auto;
+	width: 100%;
+}
+
+table th {
+	padding: 0.5em 1em;
+	font-weight: bold;
+	text-align: left;
+}
+
+table td {
+	padding: 0.5em 1em;
+	text-align: left;
+}
+
+table tr.totals {
+	font-weight: bold;
+}
+
+.dates_display {
+	text-align: center;
+	font-size: 1.25em;
+	padding: 1em;
+}
+
+.percentToGoal {
+	text-align: center;
+	display: block;
+	margin: auto;
+	font-size: 1.25em;
+}
+
+.actions_tab {
+	position: relative;
+	text-align: right;
+}
+
+.settings {
+	height: 2em;
+	padding: 1em;
+	cursor: pointer;
+}
+
+.settings_dropdown {
+	list-style: none;
+    padding-left: 0;
+	background-color: #ddd;
+	position: absolute;
+	top: 2em;
+	right: 1em;
+	display: none;
+}
+
+.settings_dropdown li {
+	position: relative;
+	padding: 0.5em;
+	padding-left: 3em;
+}
+
+.settings_dropdown li[data-href] {
+	cursor: pointer;
+}
+
+.settings_dropdown li[data-href]:hover {
+	background-color: #eee;
+}
+
+.settings_dropdown[data-active="true"] {
+	display: block;
+}
+
+a.add_run {
+	font-size: 1.25em;
+	right: 4em;
+    bottom: 1.3em;
+    position: absolute;
+}
+
+.container {
+	width: 15em;
+	margin: auto;
+	text-align: center;
+	margin-top: 1em;
+}

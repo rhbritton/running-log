@@ -1,0 +1,62 @@
+body {
+	width: 50em;
+	max-width: 90%;
+	margin: auto;
+  	padding: 5%;
+  	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+form {
+	margin: auto;
+	position: relative;
+	width: 50em;
+	max-width: 100%;
+}
+
+.field {
+	width: 100%;
+	margin-bottom: 1em;
+}
+
+.table {
+	overflow-x: auto;
+}
+
+label {
+	width: 100%;
+	text-align: left;
+	display: block;
+}
+
+input[type="number"], input[type="email"], input[type="text"], input[type="password"] {
+	width: 100%;
+	padding: 0;
+	padding-top: 0.25em;
+	padding-bottom: 0.5em;
+	border: none;
+	border-bottom: 1px solid #ccc;
+	font-size: 1.25em;
+}
+
+input[type="date"] {
+	width: 100%;
+	font-size: 1.25em;
+}
+
+select {
+	font-size: 1.25em;
+}
+
+textarea {
+	font-size: 1.25em;
+	width: 100%;
+	height: 3em;
+}
+
+textarea:focus, input:focus {
+    outline: none;
+}

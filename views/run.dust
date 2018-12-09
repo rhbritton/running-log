@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Running Log</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/run.css' />
+
+    <meta content='width=device-width, initial-scale=1' name='viewport'/>
+  </head>
+
+  <body>
+    <form action="{?run}/run/edit/{run._id}{:else}/run/add{/run}" method="post">
+    	<a href="javascript:history.back()">Back</a>
+    	<h1>Add Run</h1>
+    	<div class="field">
+    		<label>Date</label>
+    		<input required="true" name="date" type="date" value="{?run.dateFormat}{run.dateFormat}{:else}{today}{/run.dateFormat}" />
+    	</div>
+
+    	<div class="field">
+    		<label>Miles</label>
+    		<input required="true" name="miles" type="number" step="0.01" value="{run.miles}" />
+    	</div>
+
+    	<div class="field">
+    		<label>Time</label>
+    		<select name="h">
+    			{#hoursDropdown}
+    			<option{?selected} selected="selected"{/selected} value="{value}">{display}</option>
+    			{/hoursDropdown}
+    		</select>
+    		<select name="m">
+    			{#minutesDropdown}
+    			<option{?selected} selected="selected"{/selected} value="{value}">{display}</option>
+    			{/minutesDropdown}
+    		</select>
+    		<select name="s">
+    			{#secondsDropdown}
+    			<option{?selected} selected="selected"{/selected} value="{value}">{display}</option>
+    			{/secondsDropdown}
+    		</select>
+    	</div>
+
+    	<div class="field">
+    		<label class="rpe_link">RPE ?</label>
+    		<input required="true" name="rpe" type="number" min="1" max="10" value="{run.rpe}" />
+    	</div>
+
+    	<div class="field">
+    		<label>Comment</label>
+    		<textarea name="comment">{run.comment}</textarea>
+    	</div>
+
+    	<input type="hidden" name="redirect_url" value="{redirect_url}" />
+    	{?run}
+    		<input type="hidden" name="_id" value="{run._id}" />
+    		<button type="submit">Save</button>
+    	{:else}
+    		<button type="submit">Add</button>
+    	{/run}
+    </form>
+
+    <div class="transparent_background"></div>
+    <div class="rpe_container">
+    	<div class="close">&times;</div>
+    	<img class="rpe_image" src="/images/rpe_chart.png" />
+    </div>
+
+    <script src="/javascripts/plugins/jquery.min.js"></script>
+    <script src="/javascripts/run.js"></script>
+  </body>
+</html>

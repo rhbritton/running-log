@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Running Log</title>
+	<link rel='stylesheet' href='/stylesheets/style.css' />
+	<link rel='stylesheet' href='/stylesheets/home.css' />
+
+	<meta content='width=device-width, initial-scale=1' name='viewport'/>
+</head>
+
+ <body>
+
+ 	<div class="actions_tab">
+ 		<a class="add_run" href="/run/add">Add Run +</a>
+ 		<img class="settings" src="/images/settings.png" />
+	  	<ul class="settings_dropdown">
+			<li>{user.email}</li>
+			<li data-href="/logout">Logout</li>
+		</ul>
+ 	</div>
+
+	<div class="field">
+	 	<div class="container">
+			<label>Date</label>
+			<input class="today" value="{today}" type="date" />
+	 	</div>
+
+		<div class="dates_display">
+			{startDateDisplay} - {endDateDisplay}
+		</div>
+
+		<div class="goal">
+			<div class="percentToGoal"><span id="percentToGoal">{percentToGoal}%</span> Complete</div>
+		</div>
+
+		<div class="container">
+			<label>Goal Miles</label>
+			<input data-startDate="{startDateHTML}" name="goal" type="number" value="{goal}" />
+		</div>
+	</div>
+
+	<div class="table field">
+		<table>
+			<th>Date</th>
+			<th>Miles</th>
+			<th>Time</th>
+			<th>Min/Mile</th>
+			<th>RPE</th>
+			<th>sRPE</th>
+			<th>Comment</th>
+			<th></th>
+			<th></th>
+			{#runs}
+				<tr>
+					<td>{dateFormat}</td>
+					<td>{miles}</td>
+					<td>{time}</td>
+					<td>{minPerMile}</td>
+					<td>{rpe}</td>
+					<td>{srpe}</td>
+					<td>{comment}</td>
+					<td><a href="/run/edit/{_id}">Edit</a></td>
+					<td><a class="delete" data-miles="{miles}" data-date="{dateFormat}" href="/run/delete/{_id}">Delete</a></td>
+				</tr>
+			{/runs}
+			<tr class="totals">
+				<td></td>
+				<td id="totalMiles">{totals.miles}</td>
+				<td>{totals.time}</td>
+				<td>{totals.minPerMile}</td>
+				<td>{totals.rpe}</td>
+				<td>{totals.srpe}</td>
+				<td></td>
+				<td></td>
+			</tr>
+		</table>
+	</div>
+
+    <script src="/javascripts/plugins/jquery.min.js"></script>
+    <script src="/javascripts/home.js"></script>
+</body>
+</html>

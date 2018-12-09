@@ -1,0 +1,86 @@
+button[type="submit"] { 
+	font-size: 1.25em;
+	outline: none;
+	border: none;
+	cursor: pointer;
+	padding: 0.75em;
+	border-radius: 0.25em;
+	color: white;
+	float: right;
+	background-color: #4F73C6;
+}
+
+button[type="submit"]:hover {
+	background-color: #7390D9;
+}
+
+.rpe_link {
+	color: #00B7FF;
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+.transparent_background {
+	display: none;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	left: 0;
+	top: 0;
+	background: rgba(0, 0, 0, 0.25);
+	opacity: 0.5;
+	z-index: 10;
+}
+
+.transparent_background[data-active="true"] {
+	display: block;
+}
+
+.rpe_container {
+	display: none;
+	position: fixed;
+    margin: auto;
+    top: -100%;
+    bottom: -100%;
+    left: -100%;
+    right: -100%;
+    width: 50em;
+    max-width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0);
+    z-index: 11;
+}
+
+.rpe_container img {
+	width: auto;
+	height: auto;
+	max-width: 80%;
+	max-height: 80%;
+}
+
+.rpe_container[data-active="true"] {
+	display: block;
+}
+
+.close {
+	position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 3em;
+    padding: 0.5em 0.75em;
+    cursor: pointer;
+}
+
+.close:hover {
+	color: #aaa;
+}
+
+.rpe_image {
+	position: absolute;
+    margin: auto;
+    left: -50%;
+    right: -50%;
+    height: 80%;
+    top: -50%;
+    bottom: -50%;
+}

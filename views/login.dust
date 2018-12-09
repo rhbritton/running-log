@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Running Log</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/login.css' />
+
+    <meta content='width=device-width, initial-scale=1' name='viewport'/>
+  </head>
+
+  <body>
+    <h1>Running Log</h1>
+
+    <form {?isLogin}data-active="true"{/isLogin} id="login" action="/login" method="post">
+    	<div class="field">
+    		<label>Email</label>
+    		<input placeholder="example@domain.com" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" name="email" type="email" value="{email}" maxlength="254" required="true" />
+    	</div>
+    	<div class="field">
+    		<label>Password</label>
+    		<input name="password" type="password" value="{password}" required="true" />
+    	</div>
+    	<div class="err">{?err}<span>{err}</span>{/err}</div>
+    	<div class="actions">
+    		<button type="submit">Log In</button>
+    		<span class="switch"id="to_sign_up">Don't have an account?</span>
+    	</div>
+    </form>
+
+    <form {?isSignUp}data-active="true"{/isSignUp} id="sign_up" action="/sign-up" method="post">
+    	<div class="field">
+    		<label>Email</label>
+    		<input placeholder="example@domain.com" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" name="email" type="email" value="{email}" maxlength="254" required="true" />
+    	</div>
+    	<div class="field">
+    		<label>Password (minimum of 7 characters)</label>
+    		<input name="password" type="password" value="{password}" minlength="7" maxlength="50" pattern=".{7,}" required="true" />
+    	</div>
+    	<div class="field">
+    		<label>Repeat Password (must match the above password)</label>
+    		<input name="rpassword" type="password" value="{rpassword}" minlength="7" maxlength="50" pattern=".{7,}" required="true" />
+    	</div>
+    	<div class="err">{?err}<span>{err}</span>{/err}</div>
+    	<div class="actions">
+    		<button type="submit">Sign Up</button>
+    		<span class="switch" id="to_login">Already have an account?</span>
+    	</div>
+    </form>
+
+    <script src="/javascripts/plugins/jquery.min.js"></script>
+    <script src="/javascripts/login.js"></script>
+  </body>
+</html>
