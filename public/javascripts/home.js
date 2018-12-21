@@ -9,6 +9,25 @@ $(function() {
 		}
 	})
 
+	$('.day').click(function(e) {
+		e.stopPropagation();
+		
+		var isactive = $(this).find('.run_data').attr('data-active');
+
+		$('.day .run_data').each(function() {
+			$(this).removeAttr('data-active');
+		});
+
+		if (!isactive)
+			$(this).find('.run_data').attr('data-active', true);
+	})
+
+	$('body').click(function(e) {
+		$('.day .run_data').each(function() {
+			$(this).removeAttr('data-active');
+		});
+	})
+
 	$('[name="goal"]').change(function() {
 		var percentToGoal = 0;
 		if ($('#totalMiles').text() && $(this).val())

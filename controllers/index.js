@@ -18,65 +18,117 @@ Controller.home = function(req, res, next) {
 
 	today.setHours(0, 0, 0, 0);
 
-	var dates = Services.getDateGroup(today);
+	var calendarDates = getCalendarDates(today);
 
-	User.findOne({ _id: req.session.user._id }, function(err, user) {
-		Run.find({ user: req.session.user._id, date: { $lte: dates.end_date, $gte: dates.start_date } }, undefined, { sort: { date: 1 } }, function(err, runs) {
-			Goal.findOne({ user: req.session.user._id, start_date: Services.formatHTMLDate(dates.start_date) }, function(err, goal) {
-				if (!goal)
-					goal = {};
+	Services.getRunsForCalendarDates(req, calendarDates, function(err, runs) {
+		if (err) return next(err);
 
-				var totals = {
-					miles: 0,
-					seconds: 0,
-					minPerMile: 0,
-					rpe: 0,
-					srpe: 0
+		calendarDates.forEach(function(cdate, i) {
+			var endDay = new Date(cdate.date);
+			endDay.setHours(23, 59, 59, 999);
+
+			runs.forEach(function(run) {
+				if (run.date < endDay && run.date >= cdate.date) {
+					calendarDates[i].containsRun = true;
+					calendarDates[i].runs.push(run);
 				}
+			})
+		})
 
-				runs && runs.forEach(function(run, i) {
-					runs[i].dateFormat = Services.formatDisplayDate(run.date);
-					runs[i].time = Services.formatTime(run.seconds);
-					runs[i].minPerMile = Services.calcMinsPerMile(run.miles, run.seconds);
-					runs[i].srpe = run.miles*run.rpe;
+		var dates = Services.getDateGroup(today);
 
-					totals.miles += run.miles;
-					totals.seconds += run.seconds;
-					totals.rpe += run.rpe;
-					totals.srpe += run.srpe;
-				});
+		User.findOne({ _id: req.session.user._id }, function(err, user) {
+			Run.find({ user: req.session.user._id, date: { $lte: dates.end_date, $gte: dates.start_date } }, undefined, { sort: { date: 1 } }, function(err, runs) {
+				Goal.findOne({ user: req.session.user._id, start_date: Services.formatHTMLDate(dates.start_date) }, function(err, goal) {
+					if (!goal)
+						goal = {};
 
-				totals.time = Services.formatTime(totals.seconds);
+					var totals = {
+						miles: 0,
+						seconds: 0,
+						minPerMile: 0,
+						rpe: 0,
+						srpe: 0
+					}
 
-				if (totals.miles && totals.seconds)
-					totals.minPerMile = Services.calcMinsPerMile(totals.miles, totals.seconds);
-				else
-					totals.minPerMile = '0:00';
+					runs && runs.forEach(function(run, i) {
+						runs[i].dateFormat = Services.formatDisplayDate(run.date);
+						runs[i].time = Services.formatTime(run.seconds);
+						runs[i].minPerMile = Services.calcMinsPerMile(run.miles, run.seconds);
+						runs[i].srpe = run.miles*run.rpe;
 
-				var percentToGoal = 0;
-				if (goal.goal)
-					percentToGoal = (100*(totals.miles/goal.goal)).toFixed(2);
+						totals.miles += run.miles;
+						totals.seconds += run.seconds;
+						totals.rpe += run.rpe;
+						totals.srpe += run.srpe;
+					});
 
-				var showNotifications = false;
-				if (user.requestsReceived.length)
-					showNotifications = true;
+					totals.time = Services.formatTime(totals.seconds);
 
-				res.render('home', { 
-					user: req.session.user, 
-					showNotifications: showNotifications,
-					friendRequestsLength: user.requestsReceived.length,
-					percentToGoal: percentToGoal, 
-					goal: goal.goal, 
-					totals: totals, 
-					runs: runs, 
-					today: Services.formatHTMLDate(today), 
-					startDateHTML: Services.formatHTMLDate(dates.start_date), 
-					startDateDisplay: Services.formatDisplayDate(dates.start_date), 
-					endDateDisplay: Services.formatDisplayDate(dates.end_date) 
+					if (totals.miles && totals.seconds)
+						totals.minPerMile = Services.calcMinsPerMile(totals.miles, totals.seconds);
+					else
+						totals.minPerMile = '0:00';
+
+					var percentToGoal = 0;
+					if (goal.goal)
+						percentToGoal = (100*(totals.miles/goal.goal)).toFixed(2);
+
+					var showNotifications = false;
+					if (user.requestsReceived.length)
+						showNotifications = true;
+
+					res.render('home', { 
+						user: req.session.user, 
+						calendarDates: calendarDates,
+						showNotifications: showNotifications,
+						friendRequestsLength: user.requestsReceived.length,
+						percentToGoal: percentToGoal, 
+						goal: goal.goal, 
+						totals: totals, 
+						runs: runs, 
+						today: Services.formatHTMLDate(today), 
+						startDateHTML: Services.formatHTMLDate(dates.start_date), 
+						startDateDisplay: Services.formatDisplayDate(dates.start_date), 
+						endDateDisplay: Services.formatDisplayDate(dates.end_date) 
+					});
 				});
 			});
-		});
+		})
 	})
+}
+
+var getCalendarDates = function(today) {
+	var firstOfCalendarMonth = new Date(today);
+	firstOfCalendarMonth.setDate(1);
+
+	var dayOfFirstDate = firstOfCalendarMonth.getDay();
+	firstOfCalendarMonth.setDate(1-dayOfFirstDate);
+
+	var cdates = [];
+	let first_obj = {
+		runs: [],
+		date: new Date(firstOfCalendarMonth),
+		dateNumber: firstOfCalendarMonth.getDate()
+	};
+
+	cdates.push(first_obj);
+	var isLastSaturday = false;
+	while (!isLastSaturday) {
+		firstOfCalendarMonth.setDate(firstOfCalendarMonth.getDate()+1);
+		let obj = {
+			runs: [],
+			date: new Date(firstOfCalendarMonth),
+			dateNumber: firstOfCalendarMonth.getDate()
+		};
+
+		cdates.push(obj)
+
+		if ((firstOfCalendarMonth.getFullYear() > today.getFullYear() || firstOfCalendarMonth.getMonth() > today.getMonth()) && firstOfCalendarMonth.getDay() == 6)
+			isLastSaturday = true;
+	}
+
+	return cdates;
 }
 
 Controller.updateGoal = function(req, res, next) {

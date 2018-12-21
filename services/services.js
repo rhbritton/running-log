@@ -1,4 +1,5 @@
 var Services = {};
+var Run = require('../models/run');
 
 Services.auth = function(req, res, next) {
     if (!req.session.user || !req.session.user._id)
@@ -41,6 +42,16 @@ Services.includes = function(arr, matchVal) {
 	});
 
 	return match;
+}
+
+Services.getRunsForCalendarDates = function(req, calendarDates, fn) {
+	var endDate = new Date(calendarDates[calendarDates.length-1].date);
+	endDate.setHours(23,59,59,999);
+	Run.find({ user: req.session.user._id, date: { $gte: calendarDates[0].date, $lte: endDate } }, undefined, { sort: { date: 1 } }, function(err, runs) {
+		if (err) return fn(new Error(err));
+
+		fn(null, runs)
+	});
 }
 
 Services.formatHTMLDate = function(date) {

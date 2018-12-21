@@ -47,6 +47,25 @@
 		</div>
 	</div>
 
+	<div class="field calendar">
+		{#calendarDates}
+			<div data-date="true" class="day"{?containsRun} data-containsrun="true"{/containsRun}>
+				<span class="dateNumber">{dateNumber}</span>
+				{?containsRun}
+				<div class="run_data">
+					{#runs}
+						<div>
+						{miles}/
+						{seconds}/
+						{rpe}
+						</div>
+					{/runs}
+				</div>
+				{/containsRun}
+			</div>
+		{/calendarDates}
+	</div>
+
 	<div class="table field">
 		<table>
 			<th>Date</th>
